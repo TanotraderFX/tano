@@ -7,8 +7,11 @@ import "react-color-palette/lib/css/styles.css";
 import { useState } from 'react';
 import CurrencySelect from './components/CurrencySelect';
 import { Button } from 'antd';
+import React from 'react';
+import MoonSvg from './moon.svg';
+import SunSvg from './sun.svg';
 
-const Layout = ({ nightMode, children }) => {
+const CustomLayout = ({ nightMode, children }) => {
   return nightMode ? (
     <div className='dayTheme'>
       {children}
@@ -20,16 +23,14 @@ const Layout = ({ nightMode, children }) => {
   )
 }
 
-const Navbar = ({ theme, setTheme, setCurrency }) => {
-  const switchTheme = (theme) => {
-    setTheme(!theme)
-  }
+const Navbar = ({ theme, setTheme }) => {
+  const switchTheme = (theme) => setTheme(!theme)
 
   return (
     <div id="navbar" >
-      <Button onClick={() => switchTheme(theme)} >{theme ? "Night Mode" : "Day Mode"}</Button>
-      <CurrencySelect setCurrency={setCurrency} currenciesInfo={currencies} />
+      <Button style={{ border: '0px' }} ghost onClick={() => switchTheme(theme)} >{theme ? <img style={{ color: 'white' }} src={MoonSvg} width='20px' height='20px' /> : <img style={{ color: 'white' }} src={SunSvg} width='25px' height='25px' />}</Button>
     </div>
+
   )
 }
 
@@ -59,7 +60,7 @@ const App = () => {
   }
 
   return (
-    <Layout nightMode={theme} >
+    <CustomLayout nightMode={theme} >
       <Navbar theme={theme} setTheme={setTheme} currency={currency} setCurrency={setCurrency} />
       <div className="App">
         <div id='leftSide'>
@@ -72,7 +73,10 @@ const App = () => {
                 <button onClick={saveColor}>save</button>
               </>
               :
-              <TradingsterTable currency={currency} />
+              <>
+                <CurrencySelect setCurrency={setCurrency} currenciesInfo={currencies} />
+                <TradingsterTable currency={currency} />
+              </>
           }
         </div>
         <div className='grid'>
@@ -84,7 +88,7 @@ const App = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </CustomLayout>
   )
 }
 

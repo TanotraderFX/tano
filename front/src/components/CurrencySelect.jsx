@@ -15,7 +15,7 @@ const CurrencySelect = ({ setCurrency, currenciesInfo }) => {
 	return (
 		<Select
 			placeholder="Select a currency"
-			style={{ width: 250 }}
+			style={{ width: 200, marginBottom: '10px' }}
 			onChange={onSelect}
 			className='currency-select'
 		>
